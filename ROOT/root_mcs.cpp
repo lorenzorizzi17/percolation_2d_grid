@@ -6,11 +6,12 @@
 #include <iterator>
 #include <cmath>
 
-void anal()
+void anal(int N)
 {
-    std::ifstream ifile{"mean_cluster_size/mcs_N1000.txt"};
+    std::string name = std::to_string(N);
+    std::ifstream ifile{"../data/mean_cluster_size/mcs_N"+ name +"_new.txt"};
     std::ofstream ofile;
-    ofile.open("mean_cluster_size/mcs_mean_N1000.txt", std::ios::trunc);
+    ofile.open("../data/mean_cluster_size/mcs_mean_N"+ name +"_new.txt", std::ios::trunc);
 
     std::map<std::string, double> mean;
     std::map<std::string, int> occ;
@@ -35,7 +36,7 @@ void anal()
     ifile.close();
 
     // now evaluates standard deviation
-    std::ifstream ifilesd{"mean_cluster_size/mcs_N1000.txt"};
+    std::ifstream ifilesd{"../data/mean_cluster_size/mcs_N"+name+"_new.txt"};
 
     std::map<std::string, double> variance;
     while (ifilesd.good())
@@ -59,7 +60,7 @@ void anal()
         std::cout << "Prob: " << it->first << ", mean: " << (it->second) / (occ[it->first]) << std::endl;
         std::cout << "Occur: " << occ[it->first] << std::endl;
         std::cout << "SDOM: " << (std::sqrt((variance[it->first]) / (occ[it->first] - 1))) / (std::sqrt(occ[it->first])) << std::endl;
-        ofile << it->first << " " << (it->second) / (occ[it->first]) << " 0 " << (std::sqrt((variance[it->first]) / (occ[it->first] - 1))) / (std::sqrt(occ[it->first])) << std::endl;
+        ofile << it->first << " " << ((it->second) / (occ[it->first])) << " 0 " << (std::sqrt((variance[it->first]) / (occ[it->first] - 1))) / (std::sqrt(occ[it->first])) << std::endl;
 
         
     }
@@ -70,11 +71,11 @@ void graph()
 {
 
     // anal();
-    TGraphErrors *graph = new TGraphErrors("mean_cluster_size/mcs_mean_N1000.txt", "%lg %lg %lg %lg");
+    TGraphErrors *graph = new TGraphErrors("../data/mean_cluster_size/mcs_mean_N1000_new.txt", "%lg %lg %lg %lg");
     graph->SetTitle("Mean cluster size");
     graph->GetXaxis()->SetTitle("Probability p");
     graph->GetYaxis()->SetTitle("MCS #chi");
-    graph->SetMinimum(0);
+    graph->SetMinimum(-1);
     graph->SetMaximum(30);
     graph->SetMarkerSize(.5);
     graph->SetMarkerStyle(21);
@@ -83,8 +84,8 @@ void graph()
     graph->SetLineColor(kBlue);
     graph->Draw();
 
-    TF1 *f = new TF1("l", "[0]*std::pow(std::abs(x-[2]),-[1])", 0.4, 0.593);
-    f->SetParameter(0, 0.01);
+    TF1 *f = new TF1("l", "[0]*std::pow(std::abs(x-[2]),-[1])", 0.50, 0.58);
+    f->SetParameter(0, 0.4);
     f->SetParameter(1, 2.388);
     f->SetParameter(2, 0.593);
     //f->Draw("Same");

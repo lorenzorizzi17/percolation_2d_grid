@@ -8,9 +8,9 @@
 
 void anal(int p)
 {
-    std::ifstream ifile{"finite_analysis/finite_N" + std::to_string(p)+".txt"};
+    std::ifstream ifile{"../data/finite_analysis/finite_N" + std::to_string(p)+".txt"};
     std::ofstream ofile;
-    ofile.open("finite_analysis/finite_mean_N"+std::to_string(p)+".txt", std::ios::trunc);
+    ofile.open("../data/finite_analysis/finite_mean_N"+ std::to_string(p)+".txt", std::ios::trunc);
 
     std::map<std::string, double> mean;
     std::map<std::string, int> occ;
@@ -35,7 +35,7 @@ void anal(int p)
     ifile.close();
 
     // now evaluates standard deviation
-    std::ifstream ifilesd{"finite_analysis/finite_N" + std::to_string(p)+".txt"};
+    std::ifstream ifilesd{"../data/finite_analysis/finite_N" + std::to_string(p)+".txt"};
 
     std::map<std::string, double> variance;
     while (ifilesd.good())
@@ -70,7 +70,7 @@ void graph()
 {
 
     // anal();
-    TGraphErrors *graph = new TGraphErrors("finite_analysis/finite_mean_N100.txt", "%lg %lg %lg %lg");
+    TGraphErrors *graph = new TGraphErrors("../data/finite_analysis/finite_mean_N100.txt", "%lg %lg %lg %lg");
     graph->SetTitle("Finite size analysis");
     graph->GetXaxis()->SetTitle("Probability p");
     graph->GetYaxis()->SetTitle("S_1 / S_2");
@@ -82,7 +82,7 @@ void graph()
     graph->SetLineColor(kBlue);
     graph->Draw("ALP");
 
-    TGraphErrors *graph2 = new TGraphErrors("finite_analysis/finite_mean_N200.txt", "%lg %lg %lg %lg");
+    TGraphErrors *graph2 = new TGraphErrors("../data/finite_analysis/finite_mean_N200.txt", "%lg %lg %lg %lg");
     graph2->SetTitle("Finite size analysis");
     graph2->GetXaxis()->SetTitle("Probability p");
     graph2->GetYaxis()->SetTitle("S_1 / S_2");
@@ -95,7 +95,7 @@ void graph()
     graph2->SetLineColor(kRed);
     graph2->Draw("Same");
 
-    TGraphErrors *graph3 = new TGraphErrors("finite_analysis/finite_mean_N50.txt", "%lg %lg %lg %lg");
+    TGraphErrors *graph3 = new TGraphErrors("../data/finite_analysis/finite_mean_N300.txt", "%lg %lg %lg %lg");
     graph3->SetTitle("Finite size analysis");
     graph3->GetXaxis()->SetTitle("Probability p");
     graph3->GetYaxis()->SetTitle("S_1 / S_2");
@@ -118,7 +118,7 @@ void graph()
     TLegend* leg = new TLegend(0.1,0.6,0.48,0.8);
     leg->AddEntry(graph,"N=100x100");
     leg->AddEntry(graph2,"N=200x200");
-    leg->AddEntry(graph3,"N=50x50");
+    leg->AddEntry(graph3,"N=300x300");
     //leg->AddEntry(graph5, "p=p_c");
     /* leg->AddEntry(graph5, "p=0.59");
     leg->AddEntry(graph6, "p=0.594");

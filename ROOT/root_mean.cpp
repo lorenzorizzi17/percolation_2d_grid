@@ -7,7 +7,7 @@
 
 void anal(){
     //evaluating mean values for every p
-    std::ifstream ifile{"Svalues700.txt"};
+    std::ifstream ifile{"data/Svalues700.txt"};
     std::ofstream ofile;
     ofile.open("Svalues700_mean.txt", std::ios::trunc);
 
