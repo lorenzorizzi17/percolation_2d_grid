@@ -69,9 +69,8 @@ void anal(int N)
 
 void graph()
 {
-
     // anal();
-    TGraphErrors *graph = new TGraphErrors("../data/mean_cluster_size/mcs_mean_N1000_new.txt", "%lg %lg %lg %lg");
+    TGraphErrors *graph = new TGraphErrors("../data/mean_cluster_size/mcs_mean_N200_new.txt", "%lg %lg %lg %lg");
     graph->SetTitle("Mean cluster size");
     graph->GetXaxis()->SetTitle("Probability p");
     graph->GetYaxis()->SetTitle("MCS #chi");
@@ -84,15 +83,46 @@ void graph()
     graph->SetLineColor(kBlue);
     graph->Draw();
 
+    TGraphErrors *graph2 = new TGraphErrors("../data/mean_cluster_size/mcs_mean_N1000_new.txt", "%lg %lg %lg %lg");
+    graph2->SetTitle("Mean cluster size");
+    graph2->GetXaxis()->SetTitle("Probability p");
+    graph2->GetYaxis()->SetTitle("MCS #chi");
+    graph2->SetMinimum(-1);
+    graph2->SetMaximum(30);
+    graph2->SetMarkerSize(.5);
+    graph2->SetMarkerStyle(21);
+    graph2->SetLineWidth(2);
+
+    graph2->SetLineColor(kRed);
+    graph2->Draw("Same");
+    TGraphErrors *graph3 = new TGraphErrors("../data/mean_cluster_size/mcs_mean_N500_new.txt", "%lg %lg %lg %lg");
+    graph3->SetTitle("Mean cluster size");
+    graph3->GetXaxis()->SetTitle("Probability p");
+    graph3->GetYaxis()->SetTitle("MCS #chi");
+    graph3->SetMinimum(-1);
+    graph3->SetMaximum(30);
+    graph3->SetMarkerSize(.5);
+    graph3->SetMarkerStyle(21);
+    graph3->SetLineWidth(2);
+
+    graph3->SetLineColor(kGreen);
+    graph3->Draw("Same");
+
+    TLine* line = new TLine(0.5927,0,0.5927,28);
+    line->SetLineColor(kBlack);
+    line->SetLineWidth(2);
+    line->Draw("Same");
+
     TF1 *f = new TF1("l", "[0]*std::pow(std::abs(x-[2]),-[1])", 0.50, 0.58);
     f->SetParameter(0, 0.4);
     f->SetParameter(1, 2.388);
     f->SetParameter(2, 0.593);
     //f->Draw("Same");
-    graph->Fit(f,"R");
+    //graph->Fit(f,"R");
 
     TLegend* leg = new TLegend(0.1,0.6,0.48,0.8);
-    leg->AddEntry(graph,"N=1000");
+    leg->AddEntry(graph,"N=200x200");
+    leg->AddEntry(graph2, "N=1000x1000");
     //leg->AddEntry(graph2,"N=500");
     //leg->AddEntry(graph5, "p=p_c");
     /* leg->AddEntry(graph5, "p=0.59");
