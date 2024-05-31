@@ -168,7 +168,7 @@ void graph(){
 
 
 void singleGraph(int p){
-    std::string s = "clustergraph_N1000_p" + std::to_string(p) +".txt";
+    std::string s = "../data/cluster_distribution/clustergraph_N1000_p" + std::to_string(p) +".txt";
     //std::string s = "clustergraph_N1000_pc.txt";
     const char *cstr = s.c_str();
     TGraphErrors* graph = new TGraphErrors(cstr, "%lg %lg %lg %lg");
@@ -192,4 +192,40 @@ void singleGraph(int p){
     graph->GetXaxis()->SetRange(-1,500);
 
     gPad->SetLogy();
+}
+
+
+void createSingleHisto(int p){
+    double max =500.5;
+    int bin = int(max-0.5);
+    std::string name_s = "Cluster distribution for p = 0." + std::to_string(p);
+    const char* name = name_s.c_str();
+    TH1F* totHisto = new TH1F(name,name,bin,0.5,max);
+    totHisto->Sumw2(true);
+    const int NUM = 100;
+    for (int j = 0; j < NUM; j++)
+    {
+        std::ifstream file;
+        std::string n = "../data/cluster_distribution/clusterdistribution_N1000_p" + std::to_string(p) + "_"+std::to_string(j)+ ".txt";
+        file.open(n);
+    
+        while(file.good()){
+            double x=0;
+            file >> x;
+            totHisto->Fill(x);
+        }
+        file.close();
+    }
+    TF1* plat = new TF1("plat", "1",0,max);
+    totHisto->Divide(plat, NUM);
+    totHisto->Draw();
+
+    TF1* fit = new TF1("lin","[0]*exp(-x/[1])*std::pow(x,-[2])",150,max);
+    fit->SetParameter(0,10000);
+    fit->SetParameter(1,100000); 
+    fit->SetParameter(2,2.033);
+    fit->SetLineColor(kRed);
+
+    gPad->SetLogy();
+    totHisto->Fit(fit,"R");
 }

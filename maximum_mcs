@@ -1,4 +1,6 @@
-For N = 1000x1000, maximum at p = 0.584 \pm 0.001, value = 17.6683 \pm 0.1
-For N = 800x800, maximum at p = \pm , value =   \pm 
-For N = 500x500, maximum at p = 0.581 \pm 0.001 , value = 16.0801 \pm 0.1
 For N = 200x200, maximum at p = 0.579 \pm 0.002, value = 13.3854 \pm 0.31
+For N = 300x300, maximum at p = 0.579 \pm 0.002, value = 14.7156 \pm 0.1
+For N = 500x500, maximum at p = 0.581 \pm 0.001 , value = 16.0801 \pm 0.1
+For N = 600x600, maximum at p = 0.583 \pm 0.001, value = 16.4179 \pm 0.1
+For N = 800x800, maximum at p = 0.584 \pm 0.002, value = 17.0052 \pm 0.1
+For N = 1000x1000, maximum at p = 0.585 \pm 0.001, value = 17.6051 \pm 0.1
